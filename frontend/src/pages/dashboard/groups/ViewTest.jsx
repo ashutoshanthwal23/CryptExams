@@ -250,16 +250,23 @@ const ViewTest = () => {
                       {values[1] === "_" ? "_" : formattedDate(values[1])}
                     </td>
                     <td className="px-6 py-4 text-sm">
-                      <a
+                      {
+                        values[2] === "_" ? (
+                          "waiting"
+                        ) : 
+                        <a
                         href={values[2]}
                         target="_blank"
                         className="cursor-pointer text-xl"
                       >
                         <i className="fa-solid fa-file-pdf"></i>
                       </a>
+                      }
                     </td>
                     <td className="px-6 py-4 text-sm">
-                      {formattedDate(values[3])}
+                      {
+                        values[2] === "waiting" ? "_" : formattedDate(values[3])
+                      }
                     </td>
                   </tr>
                 );
