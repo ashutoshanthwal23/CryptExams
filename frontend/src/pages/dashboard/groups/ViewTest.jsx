@@ -240,6 +240,7 @@ const ViewTest = () => {
             {Array.from(
               map.entries().map((element) => {
                 const [key, values] = element;
+            console.log(element);
                 return (
                   <tr key={key} className="text-gray-700  hover:bg-gray-50">
                     <td className="px-5 py-4 text-sm">{key}</td>
@@ -251,8 +252,8 @@ const ViewTest = () => {
                     </td>
                     <td className="px-6 py-4 text-sm">
                       {
-                        values[2] === "_" ? (
-                          "waiting"
+                        values[2] ?  (values[2] === "_" ? (
+                          "__"
                         ) : 
                         <a
                         href={values[2]}
@@ -260,12 +261,14 @@ const ViewTest = () => {
                         className="cursor-pointer text-xl"
                       >
                         <i className="fa-solid fa-file-pdf"></i>
-                      </a>
+                      </a>)
+                      :
+                      "__"
                       }
                     </td>
                     <td className="px-6 py-4 text-sm">
                       {
-                        values[2] === "_" ? "_" : formattedDate(values[3])
+                        values[2] ?  (values[2] === "_" ? "__" : formattedDate(values[3])) : '__'
                       }
                     </td>
                   </tr>
