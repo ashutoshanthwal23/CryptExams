@@ -6,7 +6,7 @@ import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 import createHttpError from "http-errors";
 import Group from "../models/group.js";
-import { convertDateToIST, convertISTtoUTC, convertTimeToIST, getExamDate, getExamTime } from "../utils/date.js";
+import { convertDateToIST, convertISTtoUTC, convertTimeToIST } from "../utils/date.js";
 import { sendMessageByTwilio } from "../twilio/sendMessage.js";
 import { getResult } from "../utils/result.js";
 import { addPasswordToPdf } from "../utils/pdfProtection.js";
