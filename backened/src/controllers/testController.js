@@ -6,7 +6,7 @@ import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 import createHttpError from "http-errors";
 import Group from "../models/group.js";
-import { getExamDate, getExamTime } from "../utils/date.js";
+import { convertDateToIST, convertISTtoUTC, convertTimeToIST, getExamDate, getExamTime } from "../utils/date.js";
 import { sendMessageByTwilio } from "../twilio/sendMessage.js";
 import { getResult } from "../utils/result.js";
 import { addPasswordToPdf } from "../utils/pdfProtection.js";
@@ -43,28 +43,27 @@ class TestController {
             // 3. Upload the encrypted PDF to Cloudinary
             const encryptedUrl = await uploadEncryptedPdfToCloudinary(encryptedFilePath);
 
-            const startTime = new Date(`${req.body.date} ${req.body.startTime}`);
-            const endTime = new Date(`${req.body.date} ${req.body.endTime}`);
+            const startTime = convertISTtoUTC(req.body.date, req.body.startTime);
+            const endTime = convertISTtoUTC(req.body.date, req.body.endTime);
 
             const uploadedFileUrl = await uploadFile(questionPdf);
-
-            await deleteFile(destPath);
-            await deleteFile(filePath);
-            await deleteFile(encryptedFilePath);
-    
             
             await Test.create({
                 name: req.body.testName,
                 description: req.body.description,
                 owner: req.user.id,
                 group: req.query.groupId,
-                date: new Date(req.body.date),
+                date: new Date(`${req.body.date}T00:00:00+05:30`),
                 startTime,
                 endTime,
                 originalQuestionPaper: uploadedFileUrl,
                 encryptedQuestionPaper: encryptedUrl,
                 pdfPassword: req.body.password
             })
+
+            await deleteFile(destPath);
+            await deleteFile(filePath);
+            await deleteFile(encryptedFilePath);
 
             res.json({success: true})
         } catch(err){
@@ -88,9 +87,9 @@ class TestController {
                 const allTest = await Test.find({ group }).populate("group").populate("owner");
 
                 for(const test of allTest){
-                    const date = getExamDate(test.date);
-                    const startTime = getExamTime(test.startTime);
-                    const endTime = getExamTime(test.endTime);
+                    const date = convertDateToIST(test.date);
+                    const startTime = convertTimeToIST(test.startTime)
+                    const endTime = convertTimeToIST(test.endTime)
     
                     const options = {
                         id: test._id,
@@ -132,9 +131,9 @@ class TestController {
 
             const response = await axios.get(test.encryptedQuestionPaper);
 
-            const date = getExamDate(test.date);
-            const startTime = getExamTime(test.startTime);
-            const endTime = getExamTime(test.endTime);
+            const date = convertDateToIST(test.date);
+            const startTime = convertTimeToIST(test.startTime)
+            const endTime = convertTimeToIST(test.endTime)
 
             const student = await User.findById(req.user.id);
 
@@ -177,9 +176,10 @@ class TestController {
 
             const testInfo = [];
             for(const test of allTests){
-                const date = getExamDate(test.date);
-                const startTime = getExamTime(test.startTime);
-                const endTime = getExamTime(test.endTime);
+                const date = convertDateToIST(test.date);
+                const startTime = convertTimeToIST(test.startTime)
+                const endTime = convertTimeToIST(test.endTime)
+
                 const options = {
                     id: test._id,
                     name: test.name,
@@ -206,9 +206,9 @@ class TestController {
     async viewTest(req, res, next){
         try{
             const test = await Test.findById(req.params.id);
-            const date = getExamDate(test.date);
-            const startTime = getExamTime(test.startTime);
-            const endTime = getExamTime(test.endTime);
+            const date = convertDateToIST(test.date);
+            const startTime = convertTimeToIST(test.startTime)
+            const endTime = convertTimeToIST(test.endTime)
 
             const response = await axios.get(test.encryptedQuestionPaper);
 

@@ -240,7 +240,7 @@ const ViewTest = () => {
             {Array.from(
               map.entries().map((element) => {
                 const [key, values] = element;
-            console.log(element);
+
                 return (
                   <tr key={key} className="text-gray-700  hover:bg-gray-50">
                     <td className="px-5 py-4 text-sm">{key}</td>

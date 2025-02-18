@@ -50,16 +50,18 @@ export const getResult = async (keyArray, answerPdfArray, startTime, endTime, ex
         let dateString = new Date(element.submissionTime);
         const submissionDate = dateString.toLocaleDateString("en-GB", {
             timeZone: "Asia/Kolkata",
-          });
-
-          const submissionTime = dateString
-          .toLocaleTimeString("en-US", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric"
+        });
+        
+        const submissionTime = dateString.toLocaleTimeString("en-GB", {
             timeZone: "Asia/Kolkata",
             hour: "2-digit",
             minute: "2-digit",
             second: "2-digit",
-            hour12: true,
-          })
+            hour12: true
+        });
 
         map.set(rollNumber, [shaKey, submissionDate, submissionTime, '', status, messageTime])
     });
