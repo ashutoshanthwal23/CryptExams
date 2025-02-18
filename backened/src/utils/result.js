@@ -132,7 +132,7 @@ export const getResult = async (keyArray, answerPdfArray, startTime, endTime, ex
                 rollNumber: key,
                 status: values[4],
                 messageTime: values[5],
-                answerPdfLink: '-',
+                answerPdfLink: '_',
                 sha256: '_',
                 keySubmissionTime: values[2],
                 keySubmissionDate: values[1],
@@ -149,7 +149,7 @@ export const getResult = async (keyArray, answerPdfArray, startTime, endTime, ex
                 messageTime: values[5],
                 answerPdfLink: values[3],
                 sha256: '-',
-                keySubmissionTime: '-',
+                keySubmissionTime: '_',
                 keySubmissionDate: '-',
                 isSubmittedOnTime: '-'
             }

@@ -265,7 +265,7 @@ const ViewTest = () => {
                     </td>
                     <td className="px-6 py-4 text-sm">
                       {
-                        values[2] === "waiting" ? "_" : formattedDate(values[3])
+                        values[2] === "_" ? "_" : formattedDate(values[3])
                       }
                     </td>
                   </tr>
