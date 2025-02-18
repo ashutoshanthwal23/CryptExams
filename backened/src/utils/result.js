@@ -148,10 +148,10 @@ export const getResult = async (keyArray, answerPdfArray, startTime, endTime, ex
                 status: values[4],
                 messageTime: values[5],
                 answerPdfLink: values[3],
-                sha256: '-',
+                sha256: '_',
                 keySubmissionTime: '_',
-                keySubmissionDate: '-',
-                isSubmittedOnTime: '-'
+                keySubmissionDate: '_',
+                isSubmittedOnTime: '_'
             }
             responseData.push(options);
         }
