@@ -34,21 +34,15 @@ app.post("/answer", upload.single("file"), (req, res) => {
  app.post('/message', (req, res) => {
      const { originatingAddress, body, timestamp } = req.body;
    
-     // Log the received SMS details
      console.log(`Received SMS from ${originatingAddress}: ${body} at ${new Date(timestamp).toISOString()}`);
    
-     // Validate incoming data
      if (!originatingAddress || !body || !timestamp) {
        console.error('Invalid request: Missing required fields');
        return res.status(400).json({ error: 'Invalid request: Missing required fields' });
      }
    
-     // Simulate processing the message (e.g., saving to a database)
      try {
-       // Add your processing logic here
        console.log('Processing SMS message...');
-   
-       // Send a success response
        res.status(200).json({ message: 'SMS received successfully' });
      } catch (error) {
        console.error('Failed to process SMS message', error);
